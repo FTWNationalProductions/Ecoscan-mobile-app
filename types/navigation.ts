@@ -7,4 +7,10 @@ type AuthNavigation = {
 
 type AuthNavigationProp = NavigationProp<AuthNavigation>
 
-export { AuthNavigation, AuthNavigationProp }
+type MainNavigation = {
+    home: undefined
+}
+
+type MainNavigationProp = NavigationProp<MainNavigation>
+
+export { AuthNavigation, AuthNavigationProp, MainNavigation, MainNavigationProp }
