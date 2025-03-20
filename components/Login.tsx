@@ -3,23 +3,22 @@ import React, { useContext, useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
 import { User } from "../types/user";
 import { AuthContext } from "../context/AuthContext";
+import { httpError } from "../types/httpError";
 
 const Login = () => {
-    const { isLoggedIn, login } = useContext(AuthContext)
+    const { login, isLoading } = useContext(AuthContext)
 
-    const [error, setError] = useState<boolean>(false)
     const [user, setUser] = useState<User>({} as User)
 
-    const handleChange = (field : keyof User) => {
-        return (text: string) => setUser({...user, [field]: text})
+    const handleChange = (field: keyof User) => {
+        return (text: string) => setUser({ ...user, [field]: text })
     }
 
     const handleSubmit = () => {
-        setError(false)
         login(user)
     }
 
-    return(
+    return (
         <View>
             <View>
                 <Text>Email:</Text>
@@ -30,8 +29,8 @@ const Login = () => {
                 <Text>Senha:</Text>
                 <TextInput value={user.senha} onChangeText={handleChange("senha")} />
             </View>
-            
-            <Button onPress={handleSubmit} title="Enviar"/>
+
+            <Button disabled={isLoading} onPress={handleSubmit} title="Enviar" />
         </View>
     )
 }
