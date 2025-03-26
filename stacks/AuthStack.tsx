@@ -13,8 +13,8 @@ const AuthStack = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="cadastro" component={Cadastro} />
                 <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="cadastro" component={Cadastro} />
             </Stack.Navigator>
         </NavigationContainer>
 

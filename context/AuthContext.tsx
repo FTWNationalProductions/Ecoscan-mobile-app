@@ -8,8 +8,9 @@ const ApiUrl = Constants.expoConfig?.extra?.API_URL
 type AuthContext = {
     isLoggedIn: boolean,
     isLoading: boolean,
-    user: User,
+    user: User | null,
     login: (user: User) => void,
+    cadastrar: (user: User) => void,
     logOff: () => void,
 }
 
@@ -18,27 +19,34 @@ const AuthContext = createContext<AuthContext>({} as AuthContext)
 const AuthProvider = ({ children }: PropsWithChildren) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [user, setUser] = useState<User>({} as User)
+    const [user, setUser] = useState<User | null>(null)
+
+    // const login = async (user: User) => {
+    //     setIsLoading(true)
+
+    //     await fetch(ApiUrl, {
+    //         method: "POST",
+    //         body: JSON.stringify(user),
+    //         headers: { "Content-Type": "application/json" }
+    //     }).then(response => {
+    //         return response.json()
+    //     }).then(json => {
+    //         setUser(json)
+    //     }).catch(error => console.log("Erro na requisição \n \n", error.message))
+
+    //     setIsLoading(false)
+    // }
 
     const login = async (user: User) => {
         setIsLoading(true)
+    }
 
-        await fetch(ApiUrl, {
-            method: "POST",
-            body: JSON.stringify(user),
-            headers: { "Content-Type": "application/json" }
-        }).then(response => {
-            return response.json()
-        }).then(json => {
-            setUser(json)
-        }).catch(error => console.log("Erro na requisição \n \n", error.message))
-
-        setIsLoading(false)
+    const cadastrar = async (user: User) => {
+        setIsLoading(true)
     }
 
     const logOff = () => {
-        setUser({} as User)
-        AsyncStorage.removeItem("logged")
+        setUser(null)
     }
 
     useEffect(() => {
@@ -51,15 +59,17 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     }, [])
 
     useEffect(() => {
-        if (user == {} as User) {
+        if (user == null) {
             AsyncStorage.setItem("logged", "false")
+            setIsLoggedIn(false)
         } else {
             AsyncStorage.setItem("logged", "true")
+            setIsLoggedIn(true)
         }
     }, [user])
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logOff, isLoading, user }}>
+        <AuthContext.Provider value={{ isLoggedIn, login, logOff, isLoading, user, cadastrar }}>
             {children}
         </AuthContext.Provider>
     )
