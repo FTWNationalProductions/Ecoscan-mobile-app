@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { MainNavigation } from "../types/navigation"
 import { NavigationContainer } from "@react-navigation/native"
 
-import Home from "../components/Home"
+import Home from "../screens/Home"
 
 const Stack = createNativeStackNavigator<MainNavigation>()
 

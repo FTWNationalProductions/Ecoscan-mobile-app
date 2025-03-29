@@ -5,9 +5,9 @@ import { Button } from "react-native"
 const Home = () => {
     const logoff = useContext(AuthContext)
 
-    return(
+    return (
         <>
-            <Button title="sair" onPress={() => logoff}/>
+            <Button title="sair" onPress={() => logoff} />
         </>
     )
 }
