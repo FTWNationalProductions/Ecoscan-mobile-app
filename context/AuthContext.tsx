@@ -1,3 +1,4 @@
+import React from "react";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import Constants from "expo-constants";
 import { User } from "../types/user";
@@ -21,24 +22,24 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [user, setUser] = useState<User | null>(null)
 
-    // const login = async (user: User) => {
-    //     setIsLoading(true)
-
-    //     await fetch(ApiUrl, {
-    //         method: "POST",
-    //         body: JSON.stringify(user),
-    //         headers: { "Content-Type": "application/json" }
-    //     }).then(response => {
-    //         return response.json()
-    //     }).then(json => {
-    //         setUser(json)
-    //     }).catch(error => console.log("Erro na requisição \n \n", error.message))
-
-    //     setIsLoading(false)
-    // }
-
     const login = async (user: User) => {
         setIsLoading(true)
+
+        await fetch(`${ApiUrl}/auth`, {
+            method: "POST",
+            body: JSON.stringify(user),
+            headers: { "Content-Type": "application/json" }
+        }).then(response => {
+            if (response.ok) {
+                return response.json()
+            } else if(response.status == 404){
+                throw new Error("Usuário não encontrado")
+            }
+        }).then(json => {
+            setUser(json)
+        }).catch(error => console.log("Erro na requisição\n", error.message))
+
+        setIsLoading(false)
     }
 
     const cadastrar = async (user: User) => {

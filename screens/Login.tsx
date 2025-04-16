@@ -18,11 +18,6 @@ const Login = () => {
         return (text: string) => setUser({ ...user, [field]: text })
     }
 
-    const handleSubmit = () => {
-        console.log("logando")
-        login(user)
-    }
-
     return (
         <View>
             <View>
@@ -35,7 +30,7 @@ const Login = () => {
                 <TextInput value={user.senha} onChangeText={handleChange("senha")} />
             </View>
 
-            <Button disabled={isLoading} onPress={handleSubmit} title="Enviar" />
+            <Button disabled={isLoading} onPress={() => login(user)} title="Enviar" />
             <ActivityIndicator animating={isLoading}/>
 
 

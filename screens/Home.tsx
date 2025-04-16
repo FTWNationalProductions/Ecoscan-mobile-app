@@ -3,11 +3,11 @@ import { AuthContext } from "../context/AuthContext"
 import { Button } from "react-native"
 
 const Home = () => {
-    const logoff = useContext(AuthContext)
+    const { logOff } = useContext(AuthContext)
 
     return (
         <>
-            <Button title="sair" onPress={() => logoff} />
+            <Button title="sair" onPress={() => logOff  ()} />
         </>
     )
 }
