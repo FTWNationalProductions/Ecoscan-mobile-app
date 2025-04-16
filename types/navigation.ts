@@ -8,7 +8,10 @@ type AuthNavigation = {
 type AuthNavigationProp = NavigationProp<AuthNavigation>
 
 type MainNavigation = {
-    home: undefined
+    home: undefined,
+    newReport: undefined,
+    reportDetails: { id: string },
+    
 }
 
 type MainNavigationProp = NavigationProp<MainNavigation>

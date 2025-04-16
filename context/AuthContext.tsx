@@ -37,7 +37,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
             }
         }).then(json => {
             setUser(json)
-            AsyncStorage.setItem("userId", json.id)
         }).catch(error => console.log("Erro na requisição\n", error.message))
 
         setIsLoading(false)
@@ -64,23 +63,25 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     const logOff = () => {
         setUser(null)
     }
-
+    
     useEffect(() => {
         AsyncStorage.getItem("logged")
-            .then(logged => {
-                if (logged != null && logged == "true") {
-                    setIsLoggedIn(true)
-                    fetchUser()
-                }
-            })
+        .then(logged => {
+            if (logged != null && logged == "true") {
+                setIsLoggedIn(true)
+                fetchUser()
+            }
+        })
     }, [])
-
+    
     useEffect(() => {
         if (user == null) {
             AsyncStorage.setItem("logged", "false")
+            AsyncStorage.removeItem("userId")
             setIsLoggedIn(false)
         } else {
             AsyncStorage.setItem("logged", "true")
+            AsyncStorage.setItem("userId", user.id.toString())
             setIsLoggedIn(true)
         }
     }, [user])
