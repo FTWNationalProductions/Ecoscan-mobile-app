@@ -32,14 +32,29 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         }).then(response => {
             if (response.ok) {
                 return response.json()
-            } else if(response.status == 404){
+            } else if (response.status == 404) {
                 throw new Error("Usuário não encontrado")
             }
         }).then(json => {
             setUser(json)
+            AsyncStorage.setItem("userId", json.id)
         }).catch(error => console.log("Erro na requisição\n", error.message))
 
         setIsLoading(false)
+    }
+
+    const fetchUser = async () => {
+        const userId = await AsyncStorage.getItem("userId")
+        if (userId) {
+            await fetch(`${ApiUrl}/users/${userId}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                }).then(json => {
+                    setUser(json)
+                }).catch(error => console.log("Erro na requisição\n", error.message))
+        }
     }
 
     const cadastrar = async (user: User) => {
@@ -55,6 +70,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
             .then(logged => {
                 if (logged != null && logged == "true") {
                     setIsLoggedIn(true)
+                    fetchUser()
                 }
             })
     }, [])
