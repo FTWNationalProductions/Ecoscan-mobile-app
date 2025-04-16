@@ -1,15 +1,10 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { AuthNavigation } from "./types/navigation";
-import { NavigationContainer } from "@react-navigation/native";
+import { AuthProvider } from "./context/AuthContext";
+import Main from "./Main";
 
-const App = () => {
-    const Stack = createNativeStackNavigator<AuthNavigation>()
-
-    return(
-        <>
-        </>
+export default function App() {
+    return (
+        <AuthProvider>
+            <Main />
+        </AuthProvider>
     )
 }
-
-export default App

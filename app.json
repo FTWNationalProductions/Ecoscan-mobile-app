@@ -5,8 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "extra": {
+      "API_URL": "http://localhost:8080"
+    },
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
